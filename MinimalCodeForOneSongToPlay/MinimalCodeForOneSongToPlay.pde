@@ -8,11 +8,30 @@ import ddf.minim.ugens.*;
 //Global Variables
 Minim minim; //creates object to access all functions 
 AudioPlayer song1; //creates a playlist
+AudioMetaData SongMetaData1;
+
+
+color black=#000000, purple=#7E24FF, resetWhite=255;
+float xtitle, ytitle, titleWidth, titleHeight;
+PFont titleFont;
 //
 void setup() 
 {
+  size (500, 400); //Landscape 
+  //Be careful to include display orientation checker and display canvas checker
   minim = new Minim(this); //load from data directory, loadFile should also load from project folder, like loadImage *
   song1 = minim.loadFile("goodday.mp3"); //able to pass absolute path, file name & extenstion, and URL *
+  SongMetaData1 = song1.getMetaData();
+//Population
+xtitle = width*1/4;
+ytitle = height*0 ;
+titleWidth = width*1/2;
+titleHeight = height*1/10;
+//
+titleFont = createFont ("Harrington" , 55);
+
+
+
 }//End setup
 //
 void draw() 
@@ -21,6 +40,15 @@ void draw()
   if ( song1.isLooping() && song1.loopCount() ==-1) println("Looping Infintley");
   if  ( song1.isPlaying() && !song1.isLooping() ) println("Play Once");
   println("Song Position", song1.position(), "Song Length", song1.length() );
+  //
+  background (black);
+  rect (xtitle, ytitle, titleWidth, titleHeight);
+  fill(purple); //Ink
+  textAlign(CENTER, CENTER);
+  textFont(titleFont, 30);
+  text (SongMetaData1.title(), xtitle, ytitle, titleWidth, titleHeight);
+  fill(resetWhite);
+  //
 }//End draw
 //
 void keyPressed() 
